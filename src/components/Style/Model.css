@@ -1,0 +1,47 @@
+/* Modal Backdrop Styles */
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Modal Content Styles */
+  .modal-content {
+    background-color: #fff;
+    border-radius: 5px;
+    max-width: 500px;
+    min-height: 300px;
+    padding: 30px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* Modal Footer Styles */
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 20px;
+  }
+  
+  /* Modal Close Button Styles */
+  .modal-close-button {
+    background-color: #007BFF;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  .modal-close-button:hover {
+    background-color: #0056b3;
+  }
+  

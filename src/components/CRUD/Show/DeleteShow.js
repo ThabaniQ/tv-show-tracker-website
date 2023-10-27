@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Modal from '../Episode/Modal';
+import { apiService, apiUrl } from '../../Services/Services';
 
 const authToken = localStorage.getItem('authToken');
 
@@ -13,18 +14,17 @@ function DeleteShow({ show, onDelete, onClose, fromShowList }) {
   }, [fromShowList]);
 
   const handleDelete = (e) => {
-    e.preventDefault();
-    fetch(`https://tvshowtracker20231020124800.azurewebsites.net/api/Shows/DeleteShow/${show.id}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    e.preventDefault()
+   
+    const deleteShowUrl = `${apiUrl}/api/Shows/DeleteShow/${show.id}`;
+
+    apiService
+      .del(deleteShowUrl, authToken)
       .then((response) => {
         if (response.ok) {
-          onDelete(show.id);
+          onDelete(show.id); 
           closeDialog();
+          window.location.reload();
         }
       })
       .catch((error) => {
@@ -38,7 +38,7 @@ function DeleteShow({ show, onDelete, onClose, fromShowList }) {
 
   const closeDialog = () => {
     setDialogOpen(false);
-  }; 
+  };
 
   return (
     <div>

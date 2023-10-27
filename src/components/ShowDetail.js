@@ -2,41 +2,35 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Episode from './Episode';
 import AddEpisode from './CRUD/Episode/AddEpisode'; 
+import { apiService, apiUrl } from './Services/Services';
+import { useNavigate } from 'react-router-dom';
 
 function ShowDetail() {
   const [show, setShow] = useState(null);
   const [episodes, setEpisodes] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   const { id: showId } = useParams();
   const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
-    fetch(`https://tvshowtracker20231020124800.azurewebsites.net/api/Shows/GetShow/${showId}`, {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        setShow(data);
-        fetch(`https://tvshowtracker20231020124800.azurewebsites.net/api/Episodes/GetAllEpisodes/${showId}`, {
-          headers: {
-            Authorization: `Bearer ${authToken}`,
-          }
-        })
-          .then((response) => response.json())
-          .then((episodesData) => {
-            setEpisodes(episodesData);
-            setLoading(false);
-          })
-          .catch((error) => {
-            console.error('Error fetching episodes:', error);
-          });
-      })
-      .catch((error) => {
-        console.error('Error fetching show details:', error);
-      });
+    const fetchShowAndEpisodes = async () => {
+      try {
+        const [showData, episodesData] = await Promise.all([
+          apiService.get(`${apiUrl}/api/Shows/GetShow/${showId}`, authToken),
+          apiService.get(`${apiUrl}/api/Episodes/GetAllEpisodes/${showId}`, authToken),
+        ]);
+
+        setShow(showData);
+        setEpisodes(episodesData);
+        setLoading(false);
+      } catch (error) {
+        console.error('Error fetching show and episodes:', error);
+      }
+    };
+
+    fetchShowAndEpisodes();
   }, [showId, authToken]);
 
   const handleEpisodeAdded = (newEpisode) => {
@@ -48,7 +42,8 @@ function ShowDetail() {
 
   return (
     <div className="showList">
-      <h2>Show Details</h2>
+      <h2>List episodes</h2>
+      <button onClick={() => navigate('/showlist')}>Back to Show List</button>
       {loading ? (
         <p>Loading...</p>
       ) : show ? (
@@ -57,7 +52,7 @@ function ShowDetail() {
           <p>Description: {show.description}</p>
         </div>
       ) : (
-        <p>Show not found</p>
+        <p>No episodes found</p>
       )}
 
       <AddEpisode showId={showId} onEpisodeAdded={handleEpisodeAdded} />

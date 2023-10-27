@@ -44,15 +44,15 @@
   }
   
   input {
-    width: 90%;
+    width: 80%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     outline: none;
   }
   
-  .buttonLogin {
-    width: 100% !important;
+  button {
+    width: 10%;
     padding: 10px;
     background: #0077b6;
     color: #fff;

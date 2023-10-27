@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import './Style/Login.css';
+import { apiService, apiUrl } from './Services/Services';
 
 function Register() {
   const [email, setEmail] = useState('');
@@ -16,13 +18,7 @@ function Register() {
     };
 
     try {
-      const response = await fetch('https://tvshowtracker20231020124800.azurewebsites.net/api/identity/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(userRegistration),
-      });
+      const response = await apiService.post(`${apiUrl}/api/identity/register`, userRegistration); 
 
       if (response.ok) {
         setError('Registration successful.');
@@ -36,36 +32,43 @@ function Register() {
   };
 
   return (
-    <div>
-      <h2>Sign up</h2>
-      {error && <div className="error">{error}</div>}
-      <form onSubmit={handleRegister}>
-        <div>
-          <label>Email:</label>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Username:</label>
-          <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-          />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit">Sign up</button>
-      </form>
+    <div className="login-container">
+      <div className="login-content">
+        <h2>Sign up</h2>
+        {error && <div className="error">{error}</div>}
+        <form onSubmit={handleRegister}>
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="text"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Username:</label>
+            <input
+              type="text"
+              placeholder="Enter your username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="form-group">
+            <label>Password:</label>
+            <input
+              type="password"
+              placeholder="Enter your password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <button className="buttonLogin" type="submit">
+            Sign up
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

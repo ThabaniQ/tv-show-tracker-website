@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from '../Episode/Modal';
+import PropTypes from 'prop-types';
+import { apiService, apiUrl } from '../../Services/Services'; 
 
 function AddShow({ onShowAdded, onClose, fromShowList }) {
   const [showData, setShowData] = useState({
@@ -24,15 +26,11 @@ function AddShow({ onShowAdded, onClose, fromShowList }) {
 
   const handleSave = (e) => {
     e.preventDefault();
-    fetch('https://tvshowtracker20231020124800.azurewebsites.net/api/Shows/AddShows', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(showData),
-    })
-      .then((response) => response.json())
+    
+    const addShowUrl = `${apiUrl}/api/Shows/AddShows`;
+    
+    apiService
+      .post(addShowUrl, authToken, showData)
       .then((newShow) => {
         onShowAdded(newShow);
         setShowData({
@@ -90,5 +88,11 @@ function AddShow({ onShowAdded, onClose, fromShowList }) {
     </div>
   );
 }
+
+AddShow.propTypes = {
+  onShowAdded: PropTypes.func.isRequired,
+  onClose: PropTypes.func.isRequired,
+  fromShowList: PropTypes.bool.isRequired,
+};
 
 export default AddShow;

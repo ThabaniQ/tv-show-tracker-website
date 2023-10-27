@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Modal from './Modal';
+import PropTypes from 'prop-types';
+import { apiService, apiUrl } from '../../Services/Services'; 
 
 function AddEpisode({ showId, onEpisodeAdded, fromShowList }) {
   const [episodeData, setEpisodeData] = useState({
@@ -23,18 +25,13 @@ function AddEpisode({ showId, onEpisodeAdded, fromShowList }) {
 
   const handleSave = (e) => {
     e.preventDefault();
-    const apiUrl = `https://tvshowtracker20231020124800.azurewebsites.net/api/Episodes/AddEpisode/${showId}`;
-    const authToken = localStorage.getItem('authToken');
 
-    fetch(apiUrl, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(episodeData),
-    })
-      .then((response) => response.json())
+    const authToken = localStorage.getItem('authToken');
+    const url = `${apiUrl}/api/Episodes/AddEpisode/${showId}`; 
+    episodeData.title='';
+    
+    apiService
+      .post(url, authToken, episodeData)
       .then((data) => {
         onEpisodeAdded(data);
         closeDialog();
@@ -88,5 +85,11 @@ function AddEpisode({ showId, onEpisodeAdded, fromShowList }) {
     </div>
   );
 }
+
+AddEpisode.propTypes = {
+  showId: PropTypes.string.isRequired,
+  onEpisodeAdded: PropTypes.func.isRequired,
+  fromShowList: PropTypes.bool.isRequired,
+};
 
 export default AddEpisode;

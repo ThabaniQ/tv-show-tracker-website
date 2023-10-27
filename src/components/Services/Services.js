@@ -19,6 +19,17 @@ const post = (url, authToken, data) => {
   }).then((response) => response.json());
 };
 
+const put = (url, authToken, data) => {
+    return fetch(url, {
+        method: 'PUT',
+        headers: {
+          'Authorization': `Bearer ${authToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      }).then((response) => response.json());
+    };
+
 const del = (url, authToken) => {
   return fetch(url, {
     method: 'DELETE',
@@ -32,27 +43,9 @@ export const apiService = {
   get,
   post,
   del,
+  put
 };
 
-export default apiUrl;
+export { apiUrl };
 
 
-
-// useEffect(() => {
-//     const fetchShowAndEpisodes = async () => {
-//       try {
-//         const [showData, episodesData] = await Promise.all([
-//           apiService.get(`${apiUrl}/api/Shows/GetShow/${showId}`, authToken),
-//           apiService.get(`${apiUrl}/api/Episodes/GetAllEpisodes/${showId}`, authToken),
-//         ]);
-
-//         setShow(showData);
-//         setEpisodes(episodesData);
-//         setLoading(false);
-//       } catch (error) {
-//         console.error('Error fetching show and episodes:', error);
-//       }
-//     };
-
-//     fetchShowAndEpisodes();
-//   }, [showId, authToken]);

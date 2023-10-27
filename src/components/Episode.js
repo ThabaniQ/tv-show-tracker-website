@@ -1,3 +1,4 @@
+// Episode.js
 import React, { useState } from 'react';
 import DeleteEpisode from './CRUD/Episode/DeleteEpisode';
 import UpdateEpisode from './CRUD/Episode/UpdateEpisode';
@@ -24,9 +25,7 @@ function Episode({ episode, episodes, showId }) {
       const maxSeasonNumber = Math.max(...watchedEpisodes.map((e) => e.seasonNumber));
       const maxEpisodeNumber = Math.max(...watchedEpisodes.map((e) => e.episodeNumber));
 
-      const nextEpisode = episodes.find(
-        (e) => e.seasonNumber === maxSeasonNumber && e.episodeNumber === maxEpisodeNumber + 1
-      );
+      const nextEpisode = episodes.find((e) => e.seasonNumber === maxSeasonNumber && e.episodeNumber === maxEpisodeNumber + 1);
 
       if (nextEpisode) {
         nextEpisodeInfo = `Next episode: Season ${nextEpisode.seasonNumber}, Episode ${nextEpisode.episodeNumber}`;
@@ -60,15 +59,24 @@ function Episode({ episode, episodes, showId }) {
         Remove episode
       </button>
       <button className="buttonStyle" onClick={openUpdateModal}>
-        Mark as viewed
+       Mark as {episode.watched ? 'Unviewed' : 'Viewed'}
       </button>
       {nextEpisodeInfo && <p>{nextEpisodeInfo}</p>}
 
       {isDeleteModalOpen && (
-        <DeleteEpisode showId={showId} episode={episode} onDelete={closeDeleteModal} />
+        <DeleteEpisode
+          showId={showId}
+          episode={episode}
+          onDelete={closeDeleteModal}
+          fromShowList={true}
+        />
       )}
       {isUpdateModalOpen && (
-        <UpdateEpisode showId={showId} episode={episode} onUpdate={closeUpdateModal} />
+        <UpdateEpisode
+          showId={showId}
+          episode={episode}
+          onUpdate={closeUpdateModal} 
+        />
       )}
     </div>
   );

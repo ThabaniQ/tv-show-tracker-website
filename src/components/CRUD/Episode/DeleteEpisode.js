@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import Modal from './Modal';
+import PropTypes from 'prop-types';
+import { apiService, apiUrl } from '../../Services/Services';
 
-const authToken = localStorage.getItem('authToken');
-
-function DeleteEpisode({ episode, onDelete, showId, onClose, fromShowList }) {
+function DeleteEpisode({ episode, onDelete, showId, fromShowList }) {
   const [isDialogOpen, setDialogOpen] = useState(false);
+
+  const authToken = localStorage.getItem('authToken');
 
   useEffect(() => {
     if (fromShowList) {
@@ -13,14 +15,11 @@ function DeleteEpisode({ episode, onDelete, showId, onClose, fromShowList }) {
   }, [fromShowList]);
 
   const handleDelete = (e) => {
-   
-    fetch(`https://tvshowtracker20231020124800.azurewebsites.net/api/Episodes/DeleteEpisode/${episode.id}/${showId}`, {
-      method: 'DELETE',
-      headers: {
-        'Authorization': `Bearer ${authToken}`,
-        'Content-Type': 'application/json',
-      },
-    })
+    e.preventDefault()
+    const deleteUrl = `${apiUrl}/api/Episodes/DeleteEpisode/${episode.id}/${showId}`;
+
+    apiService
+      .del(deleteUrl, authToken)
       .then((response) => {
         if (response.ok) {
           onDelete(episode.id);
@@ -30,7 +29,7 @@ function DeleteEpisode({ episode, onDelete, showId, onClose, fromShowList }) {
       .catch((error) => {
         console.error('Error deleting episode:', error);
       });
-  };
+  }
 
   const openDialog = () => {
     setDialogOpen(true);
@@ -42,7 +41,7 @@ function DeleteEpisode({ episode, onDelete, showId, onClose, fromShowList }) {
 
   return (
     <div>
-      {fromShowList && (
+       {fromShowList ? null : (
         <button onClick={handleDelete}>Delete episode</button>
       )}
 
@@ -60,5 +59,12 @@ function DeleteEpisode({ episode, onDelete, showId, onClose, fromShowList }) {
     </div>
   );
 }
+
+DeleteEpisode.propTypes = {
+  episode: PropTypes.object.isRequired,
+  onDelete: PropTypes.func.isRequired,
+  showId: PropTypes.string.isRequired,
+  fromShowList: PropTypes.bool.isRequired,
+};
 
 export default DeleteEpisode;

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+
 class Modal extends React.Component {
   render() {
     if (!this.props.show) {
@@ -31,7 +32,7 @@ class Modal extends React.Component {
         <div className="modal" style={modalStyle}>
           {this.props.children}
 
-          <div className="footer">
+          <div >
             <button onClick={this.props.onClose}>Close</button>
           </div>
         </div>
