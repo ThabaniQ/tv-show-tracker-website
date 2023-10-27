@@ -1,0 +1,17 @@
+.showList{
+    margin: 5%;
+    font-size: 20px;
+}
+
+.listHeader{
+    font-style: italic;
+    font-size: revert;
+    color: gray;
+    background: azure;
+}
+
+.buttonStyle{
+    margin: 2%;
+    height: 40px;
+}
+

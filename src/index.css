@@ -11,3 +11,114 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+ul li a {
+  color: #000;
+ }
+ 
+ ul li a:hover {
+  color: #00a8ff;
+ }
+ 
+ ul li a.active {
+  color: #00a8ff;
+ } 
+ /* Add this CSS to your stylesheet or component's styling */
+
+.welcome-container {
+  text-align: center;
+  padding: 50px;
+  background-color: #f0f0f0;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  margin: 10% auto;
+}
+
+h1 {
+  font-size: 2.5rem;
+  color: #333;
+}
+
+h2 {
+  font-size: 1.5rem;
+  color: #555;
+}
+
+p {
+  font-size: 1rem;
+  color: #777;
+  margin-top: 20px;
+}
+
+.action-buttons {
+  margin-top: 30px;
+}
+
+.start-button,
+.learn-more-button {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 10px;
+  text-decoration: none;
+  color: #fff;
+  background-color: #007acc;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.start-button:hover,
+.learn-more-button:hover {
+  background-color: #005b99;
+}
+
+/* Media query for responsive design */
+@media (max-width: 768px) {
+  .welcome-container {
+    width: 80%;
+  }
+}
+
+/* styles.css */
+.navbar {
+  background-color: #333;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+}
+
+.navbar a {
+  color: #fff;
+  text-decoration: none;
+  margin: 0 10px;
+  font-weight: bold;
+}
+
+.navbar a:hover {
+  text-decoration: underline;
+}
+
+
+.showList{
+  margin: 5%;
+  font-size: 20px;
+}
+
+.listHeader{
+  font-style: italic;
+  font-size: revert;
+  color: gray;
+  background: azure;
+}
+
+.buttonStyle{
+  margin: 1%;
+  height: 40px;
+}
+.ul{
+  list-style-type: circle;
+}
